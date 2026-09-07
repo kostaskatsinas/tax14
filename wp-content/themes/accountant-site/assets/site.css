@@ -2,3 +2,5 @@ html{scroll-behavior:smooth;scroll-padding-top:7rem}body{margin:0;-webkit-font-s
 @media(max-width:782px){.admin-bar .wp-site-blocks>header{top:46px}.site-header{min-height:85px}.wp-block-columns{gap:1.75rem!important}.contact-panel{padding-left:1.25rem}.hero h1{letter-spacing:-.03em}}
 @media(max-width:600px){.admin-bar .wp-site-blocks>header{position:relative;top:0}.site-header .wp-block-site-title{font-size:1.4rem}.wp-block-navigation__responsive-container-open,.wp-block-navigation__responsive-container-close{min-width:44px;min-height:44px;align-items:center;justify-content:center}.wp-block-buttons>.wp-block-button{max-width:100%}.footer-bottom{align-items:flex-start!important}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+.site-footer .wp-block-site-title{font-size:1.4rem}.site-header .wp-block-site-title{line-height:1.25}
+@media(max-width:600px){.site-header{display:grid!important;grid-template-columns:minmax(0,1fr) auto;gap:1rem}.site-header>nav{justify-self:end}.site-header .wp-block-site-tagline{font-size:.65rem}}

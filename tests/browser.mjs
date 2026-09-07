@@ -25,6 +25,10 @@ try {
     }
   }
   await page.goto(base);
+  const heroBounds = await page.locator('.hero').boundingBox();
+  const headerBounds = await page.locator('.site-header').boundingBox();
+  assert.ok(headerBounds.x >= 20 && headerBounds.x + headerBounds.width <= 1420, 'Header has horizontal breathing room');
+  assert.ok(heroBounds.width > 1000, 'Homepage uses the intended wide layout');
   await page.screenshot({path: 'artifacts/home-desktop.png', fullPage: true});
   await page.keyboard.press('Tab');
   assert.match(await page.locator(':focus').innerText(), /skip to content/i);
@@ -97,6 +101,16 @@ try {
   });
   await page.goto(base + '/about/');
   assert.ok(await page.getByText('Verified WordPress editor update.').count());
+  for (const slug of ['home', 'experience', 'education']) {
+    const editablePages = await (await page.request.get(base + '/wp-json/wp/v2/pages?slug=' + slug)).json();
+    await page.goto(base + '/wp-admin/post.php?post=' + editablePages[0].id + '&action=edit');
+    await page.waitForFunction(() => window.wp?.data?.select('core/block-editor')?.getBlocks()?.length > 0);
+    assert.deepEqual(await page.evaluate(() => {
+      const invalid = [];
+      const walk = blocks => blocks.forEach(block => { if (block.isValid === false) invalid.push(block.name); walk(block.innerBlocks || []); });
+      walk(wp.data.select('core/block-editor').getBlocks()); return invalid;
+    }), [], 'Native blocks remain editable on ' + slug);
+  }
   const missing = await page.goto(base + '/missing-page-test/');
   assert.equal(missing.status(), 404);
   assert.deepEqual(errors, [], 'No browser JavaScript exceptions');

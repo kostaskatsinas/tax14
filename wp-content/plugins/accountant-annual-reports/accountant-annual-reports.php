@@ -164,12 +164,13 @@ function render_reports( $attributes = array() ) {
 	else {
 		$query = new \WP_Query( array( 'post_type' => 'annual_report', 'post_status' => 'publish', 'posts_per_page' => min( 12, max( 1, absint( $attributes['limit'] ?? 3 ) ) ), 'meta_key' => YEAR, 'orderby' => array( 'meta_value_num' => 'DESC', 'date' => 'DESC', 'ID' => 'DESC' ), 'no_found_rows' => true ) );
 	}
+	$heading = $archive ? 'h2' : 'h3';
 	$html = '<div class="tax14-reports alignwide">';
 	if ( ! $query->have_posts() ) { return $html . '<p>' . esc_html__( 'No annual reports have been published yet.', 'accountant-annual-reports' ) . '</p></div>'; }
 	foreach ( $query->posts as $report ) {
 		$id = $report->ID;
 		$entity = get_post_meta( $id, ENTITY, true );
-		$html .= '<article class="tax14-report-row"><p class="tax14-report-year">' . esc_html( get_post_meta( $id, YEAR, true ) ) . '</p><div class="tax14-report-copy"><h2 class="tax14-report-title"><a href="' . esc_url( get_permalink( $id ) ) . '">' . esc_html( get_the_title( $id ) ) . '</a></h2><p class="tax14-report-meta">' . esc_html__( 'Published:', 'accountant-annual-reports' ) . ' ' . report_date( $id ) . ( $entity ? ' · ' . esc_html( $entity ) : '' ) . '</p>';
+		$html .= '<article class="tax14-report-row"><p class="tax14-report-year">' . esc_html( get_post_meta( $id, YEAR, true ) ) . '</p><div class="tax14-report-copy"><' . $heading . ' class="tax14-report-title"><a href="' . esc_url( get_permalink( $id ) ) . '">' . esc_html( get_the_title( $id ) ) . '</a></' . $heading . '><p class="tax14-report-meta">' . esc_html__( 'Published:', 'accountant-annual-reports' ) . ' ' . report_date( $id ) . ( $entity ? ' · ' . esc_html( $entity ) : '' ) . '</p>';
 		if ( $report->post_excerpt ) { $html .= '<p>' . esc_html( $report->post_excerpt ) . '</p>'; }
 		$html .= '</div>' . pdf_links( $id ) . '</article>';
 	}

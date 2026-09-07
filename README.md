@@ -16,7 +16,7 @@ A complete WordPress block theme and small companion plugin for a professional p
 
 There are **no third-party WordPress plugins** to install. The companion plugin is needed for report publishing; ordinary profile pages remain native WordPress content if it is deactivated. No optional plugins are bundled. There is no contact form: the Contact page uses email and telephone links, which require no mail service or anti-spam dependency.
 
-The CI workflow downloads the current stable WordPress release and records its exact version in `wordpress-version.txt`. See the latest successful **WordPress verification** run for the tested version. The minimum API baseline is not a claim that every older release has been tested. WordPress core and database files are intentionally excluded from this repository.
+Verified on **WordPress 7.1 with PHP 8.3 and MySQL 8.0**. The CI workflow downloads the current stable WordPress release and records its exact version in `wordpress-version.txt`. See the latest successful **WordPress verification** run for subsequent tested versions. The minimum API baseline is not a claim that every older release has been tested. WordPress core and database files are intentionally excluded from this repository.
 
 Official references: [WordPress download and host requirements](https://wordpress.org/download/), [WP-CLI core downloads](https://developer.wordpress.org/cli/commands/core/download/), [native post metadata](https://developer.wordpress.org/reference/functions/register_post_meta/).
 

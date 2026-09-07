@@ -31,7 +31,7 @@ add_action( 'wp_head', function () {
 	if ( ! is_front_page() ) { return; }
 	$contact = get_option( 'tax14_contact', array() );
 	if ( empty( $contact['office'] ) && empty( $contact['name'] ) ) { return; }
-	$schema = array( '@context' => 'https://schema.org', '@type' => empty( $contact['office'] ) ? 'Person' : 'ProfessionalService', 'name' => $contact['office'] ?: $contact['name'], 'url' => home_url( '/' ) );
+	$schema = array( '@context' => 'https://schema.org', '@type' => empty( $contact['office'] ) ? 'Person' : 'ProfessionalService', 'name' => ( $contact['office'] ?? '' ) ?: $contact['name'], 'url' => home_url( '/' ) );
 	foreach ( array( 'email' => 'email', 'phone' => 'telephone', 'address' => 'address' ) as $key => $property ) {
 		if ( ! empty( $contact[ $key ] ) ) { $schema[ $property ] = $contact[ $key ]; }
 	}
